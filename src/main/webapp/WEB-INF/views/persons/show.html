@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Person</title>
@@ -8,6 +8,12 @@
 <div>
   <p>ID: <i th:text="${person.getId()}"></i></p>
   <p>NAME: <i th:text="${person.getName()}"></i></p>
+  <form th:method="GET" th:action="@{/persons/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Edit">
+  </form>
+  <form th:method="DELETE" th:action="@{/persons/{id}(id=${person.getId()})}">
+    <input type="submit" value="Delete">
+  </form>
   <a href="/persons">To list persons</a>
 </div>
 </body>
