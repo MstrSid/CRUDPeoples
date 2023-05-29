@@ -8,6 +8,9 @@
 <div>
   <p>ID: <i th:text="${person.getId()}"></i></p>
   <p>NAME: <i th:text="${person.getName()}"></i></p>
+  <p>AGE: <i th:text="${person.getAge()}"></i></p>
+  <p>EMAIL: <i th:text="${person.getEmail()}"></i></p>
+  <hr/>
   <form th:method="GET" th:action="@{/persons/{id}/edit(id=${person.getId()})}">
     <input type="submit" value="Edit">
   </form>
