@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -29,6 +30,12 @@ public class PersonDAO {
   public Person show(int id) {
     return jdbcTemplate.queryForObject("select * from persons where id = ?",
         new BeanPropertyRowMapper<>(Person.class), id);
+  }
+
+  public Optional<Person> show(String email) {
+    return jdbcTemplate.query("select * from persons where email = ?", new BeanPropertyRowMapper<>(
+        Person.class), email).stream().findAny();
+
   }
 
   public void save(Person person) {

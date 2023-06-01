@@ -2,6 +2,7 @@ package by.kos.crudpeoples.controllers;
 
 import by.kos.crudpeoples.dao.PersonDAO;
 import by.kos.crudpeoples.models.Person;
+import by.kos.crudpeoples.util.PersonValidator;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PersonsController {
 
   private final PersonDAO personDAO;
+  private final PersonValidator personValidator;
 
   @Autowired
-  public PersonsController(PersonDAO personDAO) {
+  public PersonsController(PersonDAO personDAO, PersonValidator personValidator) {
     this.personDAO = personDAO;
+    this.personValidator = personValidator;
   }
 
   @GetMapping()
@@ -50,6 +53,7 @@ public class PersonsController {
   @PostMapping()
   public String create(@ModelAttribute("person") @Valid Person person,
       BindingResult bindingResult) {
+    personValidator.validate(person, bindingResult);
     if (bindingResult.hasErrors()) {
       return "persons/new";
     }
@@ -66,6 +70,7 @@ public class PersonsController {
   @PatchMapping("/{id}")
   public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
       @PathVariable("id") int id) {
+    personValidator.validate(person, bindingResult);
     if (bindingResult.hasErrors()) {
       return "persons/edit";
     }
